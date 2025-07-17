@@ -23,7 +23,9 @@ local M = {
     -- Match numbers.
     .. "[[:digit:]]+"
     -- Ignore if the match is a hex color (or a part of it).
-    .. "(#[[:xdigit:]]+)@<!",
+    .. "(#[[:xdigit:]]+)@<!"
+    -- Do not match hex literals.
+    .. "0[xX]([[:xdigit:]]{6})@<!",
 
   math_number = "\\v"
     -- Match numbers with a sign.
@@ -36,6 +38,12 @@ local M = {
     .. "#([[:xdigit:]]{8}|[[:xdigit:]]{6}|[[:xdigit:]]{4}|[[:xdigit:]]{3})"
     -- Ignore if there is anything after the match like "ine" in "#define".
     .. "[[:lower:][:upper:][:digit:]]@!",
+
+  hex_literal = "\\v"
+    -- Ignore camelcase words.
+    .. "[[:upper:][:lower:]]@<!"
+    --
+    .. "0[xX]([[:xdigit:]]{6})",
 
   any_word = "\\v"
     -- Don't start the match with "-"
